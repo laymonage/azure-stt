@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Microsoft Cognitive Services Speech SDK JavaScript Quickstart</title>
+  <title>dengarkan.ai</title>
   <meta charset="utf-8" />
+  <style>
+    .logo {
+      padding: 2rem;
+    }
+  </style>
+  <link rel="stylesheet" href="bulma.min.css">
 </head>
 <body style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:13px;">
   <!-- <uidiv> -->
@@ -10,29 +16,17 @@
     <h1 style="font-weight:500;">Speech Recognition Speech SDK not found (microsoft.cognitiveservices.speech.sdk.bundle.js missing).</h1>
   </div>
 
-  <div id="content" style="display:none">
-    <table width="100%">
-      <tr>
-        <td></td>
-        <td><h1 style="font-weight:500;">Microsoft Cognitive Services Speech SDK JavaScript Quickstart</h1></td>
-      </tr>
-      <tr>
-        <td align="right"><a href="https://docs.microsoft.com/azure/cognitive-services/speech-service/get-started" target="_blank">Subscription</a>:</td>
-        <td><input id="subscriptionKey" type="text" size="40" value="subscription"></td>
-      </tr>
-      <tr>
-        <td align="right">Region</td>
-        <td><input id="serviceRegion" type="text" size="40" value="YourServiceRegion"></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><button id="startRecognizeOnceAsyncButton">Start recognition</button></td>
-      </tr>
-      <tr>
-        <td align="right" valign="top">Results</td>
-        <td><textarea id="phraseDiv" style="display: inline-block;width:500px;height:200px"></textarea></td>
-      </tr>
-    </table>
+  <div id="content" class="container" style="display:none">
+    <div class="has-text-centered">
+      <img src="dengarkan.ai.png" class="logo" alt="dengarkan.ai">
+    </div>
+    <div class="has-text-centered">
+      <button id="startRecognizeOnceAsyncButton" class="button is-link my-6 mx-auto">Start recognition</button>
+    </div>
+    <p class="is-size-4">Results</p>
+    <div>
+      <textarea id="phraseDiv" class="textarea px-4"></textarea>
+    </div>
   </div>
   <!-- </uidiv> -->
 
@@ -95,11 +89,13 @@
         if (authorizationToken) {
           speechConfig = SpeechSDK.SpeechConfig.fromAuthorizationToken(authorizationToken, serviceRegion.value);
         } else {
-          if (subscriptionKey.value === "" || subscriptionKey.value === "subscription") {
-            alert("Please enter your Microsoft Cognitive Services Speech subscription key!");
-            return;
-          }
-          speechConfig = SpeechSDK.SpeechConfig.fromSubscription(subscriptionKey.value, serviceRegion.value);
+          let subKey = localStorage.getItem('subscriptionKey');
+          let region = localStorage.getItem('region');
+          speechConfig = SpeechSDK.SpeechConfig.fromSubscription(subKey, region);
+          // if (subscriptionKey.value === "" || subscriptionKey.value === "subscription") {
+          //   alert("Please enter your Microsoft Cognitive Services Speech subscription key!");
+          //   return;
+          // }
         }
 
         speechConfig.speechRecognitionLanguage = "en-US";
