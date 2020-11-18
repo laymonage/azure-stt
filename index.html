@@ -91,6 +91,14 @@
         } else {
           let subKey = localStorage.getItem('subscriptionKey');
           let region = localStorage.getItem('region');
+          if (!subKey || subKey === 'null') {
+            subKey = prompt('Enter subscription key:');
+            localStorage.setItem('subscriptionKey', subKey);
+          }
+          if (!region || region === 'null') {
+            region = prompt('Enter region:');
+            localStorage.setItem('region', region);
+          }
           speechConfig = SpeechSDK.SpeechConfig.fromSubscription(subKey, region);
           // if (subscriptionKey.value === "" || subscriptionKey.value === "subscription") {
           //   alert("Please enter your Microsoft Cognitive Services Speech subscription key!");
